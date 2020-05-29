@@ -1,2 +1,2 @@
 # datalisa-desktop
- the destop client of datalisa.
+ the desktop client of datalisa
