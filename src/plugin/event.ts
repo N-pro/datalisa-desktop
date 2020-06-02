@@ -1,4 +1,4 @@
-import { ipcMain, ipcRenderer, App, BrowserWindow } from 'electron'
+import { ipcMain, ipcRenderer } from 'electron'
 import { Plugin } from './index'
 
 class Event<SE, CE>{
@@ -31,7 +31,6 @@ class Event<SE, CE>{
 
     register() {
 
-        console.log(process.type)
         if (this.status === true) return this
         this.status = true
         // if (process.type === 'renderer') {
@@ -84,7 +83,7 @@ export { Event }
 
 
 class EventPulgin implements Plugin {
-    install( app: App) {
+    install() {
         import('../modules/entry/event/index')
     }
 }

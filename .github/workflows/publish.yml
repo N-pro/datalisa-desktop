@@ -27,5 +27,6 @@ jobs:
           GH_TOKEN: ${{ secrets.gh_token }}
         run: |
           yarn install
+          del .npmrc
           (Get-Content "node_modules/builder-util/out/util.js").Replace("^[\w","^[.\w")| out-file "node_modules/builder-util/out/util.js"
           yarn electron:build --publish always
