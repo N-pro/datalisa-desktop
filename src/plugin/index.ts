@@ -11,4 +11,3 @@ const plugins: Plugin[] = [update, event]
 export default (app: App) => {
     plugins.forEach(v=>v.install(app))
 }
-e
