@@ -44,7 +44,6 @@ class Event<SE, CE>{
     }
     private registerInBrowser() {
         Object.keys(this.serverEvents).forEach(key => {
-            console.log(`${this.namespace}:${key}`)
             ipcMain.on(`${this.namespace}:${key}`, (ev, backId: string, ...arg) => {
                 const fn = this.serverEvents[key]
 
@@ -84,8 +83,10 @@ class Event<SE, CE>{
 export { Event }
 
 
-export default class EventPulgin implements Plugin {
-    install(mainWin: BrowserWindow, app: App) {
+class EventPulgin implements Plugin {
+    install( app: App) {
         import('../modules/entry/event/index')
     }
 }
+
+export const plugin =  new EventPulgin()

@@ -23,7 +23,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$electron);
 
     ipcRenderer.on("message", (event, text) => {
       this.msgs.push(text)

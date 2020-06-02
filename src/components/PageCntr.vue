@@ -25,16 +25,7 @@ export default {
   components: re.reduce((r, v) => {
     r[v.name] =v.component;
     return r;
-  }, {}),
-//   components:{
-//       'transferindex':()=>import('/src/modules/entry/view/index.page.vue')
-//   },
-  mounted() {
-console.log(re.reduce((r, v) => {
-    r[v.name] = () => import(v.path);
-    return r;
-  }, {}));
-  }
+  }, {})
 };
 </script>
 

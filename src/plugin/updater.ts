@@ -4,13 +4,11 @@ import { BrowserWindow, ipcMain, App } from 'electron';
 
 const uploadUrl = `https://github.com/likeadoge/datalisa-desktop/releases/latest/download/`; // 更新包位置
 
-export default class Updater implements Plugin {
-    install(mainWindow: BrowserWindow,app:App) {
-        // 通过main进程发送事件给renderer进程，提示更新信息
-        function sendUpdateMessage(text: string) {
-            mainWindow.webContents.send('message', text)
-        }
+class Updater implements Plugin {
+
+    install(app: App) {
         function updateHandle() {
+            console.log('update install')
             let message = {
                 error: '检查更新出错',
                 checking: '正在检查更新……',
@@ -19,22 +17,23 @@ export default class Updater implements Plugin {
             };
             autoUpdater.setFeedURL(uploadUrl);
             autoUpdater.on('error', function (message) {
-                sendUpdateMessage(message.error)
+                console.log(message.error)
             });
             autoUpdater.on('checking-for-update', function () {
-                sendUpdateMessage(message.checking)
+                console.log(message.checking)
             });
             autoUpdater.on('update-available', function (info) {
-                sendUpdateMessage(message.updateAva)
+                console.log(message.updateAva)
             });
             autoUpdater.on('update-not-available', function (info) {
-                sendUpdateMessage(message.updateNotAva);
+                console.log(message.updateNotAva);
             });
 
             // 更新下载进度事件
             autoUpdater.on('download-progress', function (progressObj) {
-                mainWindow.webContents.send('downloadProgress', progressObj)
+                console.log('downloadProgress', progressObj)
             })
+
             autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
 
                 ipcMain.on('isUpdateNow', (e, arg) => {
@@ -43,19 +42,19 @@ export default class Updater implements Plugin {
                     autoUpdater.quitAndInstall();
                 });
 
-                mainWindow.webContents.send('isUpdateNow')
+                console.log('isUpdateNow')
             });
 
-            ipcMain.on("checkForUpdate", () => {
-                //执行自动更新检查
-                autoUpdater.checkForUpdates();
-            })
+            autoUpdater.checkForUpdates();
         }
 
         updateHandle()
 
     }
 }
+
+
+export const plugin = new Updater()
 
 
 

@@ -1,18 +1,13 @@
 import { BrowserWindow, App } from 'electron'
-import Update from './updater'
-import Event from './Event'
+import { plugin as update } from './updater'
+import { plugin as event } from './Event'
 
 export interface Plugin {
-    install(
-        mainWin: BrowserWindow,
-        app: App
-    ): void
+    install(app: App): void
 }
 
-export default (mainWin: BrowserWindow,
-    app: App) => {
-    const update = new Update()
-    update.install(mainWin, app)
-    const event = new Event()
-    event.install(mainWin, app)
+const plugins: Plugin[] = [update, event]
+
+export default (app: App) => {
+    plugins.forEach(v=>v.install(app))
 }
