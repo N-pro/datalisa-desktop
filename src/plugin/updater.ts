@@ -1,13 +1,13 @@
-import {autoUpdater} from 'electron-updater'
-import {MD} from './index'
-import { BrowserWindow, ipcMain } from 'electron';
+import { autoUpdater } from 'electron-updater'
+import { Plugin } from './index'
+import { BrowserWindow, ipcMain, App } from 'electron';
 
 const uploadUrl = `https://github.com/likeadoge/datalisa-desktop/releases/latest/download/`; // 更新包位置
 
-export default class Updater implements MD{
-    install(mainWindow:BrowserWindow){
+export default class Updater implements Plugin {
+    install(mainWindow: BrowserWindow,app:App) {
         // 通过main进程发送事件给renderer进程，提示更新信息
-        function sendUpdateMessage(text:string) {
+        function sendUpdateMessage(text: string) {
             mainWindow.webContents.send('message', text)
         }
         function updateHandle() {
@@ -19,7 +19,7 @@ export default class Updater implements MD{
             };
             autoUpdater.setFeedURL(uploadUrl);
             autoUpdater.on('error', function (message) {
-                sendUpdateMessage( message.error)
+                sendUpdateMessage(message.error)
             });
             autoUpdater.on('checking-for-update', function () {
                 sendUpdateMessage(message.checking)
@@ -30,30 +30,30 @@ export default class Updater implements MD{
             autoUpdater.on('update-not-available', function (info) {
                 sendUpdateMessage(message.updateNotAva);
             });
-        
+
             // 更新下载进度事件
             autoUpdater.on('download-progress', function (progressObj) {
                 mainWindow.webContents.send('downloadProgress', progressObj)
             })
             autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
-        
+
                 ipcMain.on('isUpdateNow', (e, arg) => {
                     console.log("开始更新");
                     //some code here to handle event
                     autoUpdater.quitAndInstall();
                 });
-        
+
                 mainWindow.webContents.send('isUpdateNow')
             });
-        
-            ipcMain.on("checkForUpdate",()=>{
+
+            ipcMain.on("checkForUpdate", () => {
                 //执行自动更新检查
                 autoUpdater.checkForUpdates();
             })
         }
 
         updateHandle()
-        
+
     }
 }
 

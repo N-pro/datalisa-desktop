@@ -15,6 +15,7 @@
   "main": "background.js",
   "dependencies": {
     "electron-updater": "^4.3.1",
+    "klaw-sync": "^6.0.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",
@@ -31,6 +32,7 @@
     "@vue/cli-service": "~4.4.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^1.0.3",
+    "chokidar": "^3.4.0",
     "electron": "^6.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",

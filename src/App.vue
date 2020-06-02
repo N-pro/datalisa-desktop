@@ -1,17 +1,14 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+  <page-cntr></page-cntr>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import PageCntr from './components/PageCntr.vue';
 
 @Component({
   components: {
-    HelloWorld,
+    PageCntr,
   },
 })
 export default class App extends Vue {}
@@ -23,7 +20,7 @@ export default class App extends Vue {}
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #435668;
   margin-top: 60px;
 }
 </style>
