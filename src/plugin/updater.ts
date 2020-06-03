@@ -2,59 +2,74 @@ import { autoUpdater } from 'electron-updater'
 import { Plugin } from './index'
 import { BrowserWindow, ipcMain, App } from 'electron';
 
-const uploadUrl = `https://github.com/likeadoge/datalisa-desktop/releases/latest/download/`; // 更新包位置
+const uploadUrl = `http://39.101.132.217:8088/desktop/`; // 更新包位置
 
-class Updater implements Plugin {
+class UpdaterPlugin implements Plugin {
+
+    private message = {
+        error: '检查更新出错',
+        checking: '正在检查更新……',
+        updateAva: '检测到新版本，正在下载……',
+        updateNotAva: '现在使用的就是最新版本',
+    }
 
     install(app: App) {
-        function updateHandle() {
-            console.log('update install')
-            let message = {
-                error: '检查更新出错',
-                checking: '正在检查更新……',
-                updateAva: '检测到新版本，正在下载……',
-                updateNotAva: '现在使用的就是最新版本',
-            };
-            autoUpdater.setFeedURL(uploadUrl);
-            autoUpdater.on('error', function (message) {
-                console.log(message.error)
-            });
-            autoUpdater.on('checking-for-update', function () {
-                console.log(message.checking)
-            });
-            autoUpdater.on('update-available', function (info) {
-                console.log(message.updateAva)
-            });
-            autoUpdater.on('update-not-available', function (info) {
-                console.log(message.updateNotAva);
-            });
 
-            // 更新下载进度事件
-            autoUpdater.on('download-progress', function (progressObj) {
-                console.log('downloadProgress', progressObj)
-            })
+        autoUpdater.setFeedURL(uploadUrl);
+        autoUpdater.autoDownload = false
 
-            autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
+        console.log('update install')
+        autoUpdater.on('error', function (message) {
+            console.log(message.error)
+        });
+        autoUpdater.on('checking-for-update', () => {
+            console.log(this.message.checking)
+        });
+        autoUpdater.on('update-available', () => {
+            this.checkCallbacks.forEach(v=>{v(true)})
+            this.checkCallbacks = []
+        });
+        autoUpdater.on('update-not-available', () => {
+            this.checkCallbacks.forEach(v=>{v(false)})
+            this.checkCallbacks = []
+        });
 
-                ipcMain.on('isUpdateNow', (e, arg) => {
-                    console.log("开始更新");
-                    //some code here to handle event
-                    autoUpdater.quitAndInstall();
-                });
+        autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
+            
+            console.log('isUpdateNow')
+            autoUpdater.quitAndInstall();
+        });
 
-                console.log('isUpdateNow')
-            });
-
-            autoUpdater.checkForUpdates();
-        }
-
-        updateHandle()
+        // autoUpdater.checkForUpdates();
 
     }
+
+    checkCallbacks: ((status: boolean) => void)[] = []
+    check() {
+        autoUpdater.checkForUpdates();
+        return new Promise<boolean>(res => {
+            this.checkCallbacks= this.checkCallbacks.concat([(status: boolean) => {
+                if (status) res(true)
+                else res(false)
+            }])
+        })
+    }
+
+    downloadCallbacks: ((status: boolean) => void)[] = []
+    download() {
+        autoUpdater.downloadUpdate()
+        return new Promise<void>((res, rej) => {
+            this.downloadCallbacks = this.downloadCallbacks.concat([(status: boolean) => {
+                if (status) res()
+                else rej('下载失败！')
+            }])
+        })
+    }
+
 }
 
 
-export const plugin = new Updater()
+export const plugin = new UpdaterPlugin()
 
 
 

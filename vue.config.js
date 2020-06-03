@@ -3,7 +3,7 @@ module.exports = {
     electronBuilder: {
       builderOptions: {
           asar: false,
-          productName: "DataLisa",
+          productName: "iData",
           // icon:"./favicon.ico",
           nsis: {
             oneClick: false, // 是否一键安装

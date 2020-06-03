@@ -1,8 +1,5 @@
 <template>
-  <div>PAGE_CNTR1
-
-      <component :is="'transferindex'"></component>
-  </div>
+  <component :is="'transferindex'"></component>
 </template>
 
 <script>
@@ -23,7 +20,7 @@ s(router);
 
 export default {
   components: re.reduce((r, v) => {
-    r[v.name] =v.component;
+    r[v.name] = v.component;
     return r;
   }, {})
 };

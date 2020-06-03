@@ -85,6 +85,7 @@ export { Event }
 class EventPulgin implements Plugin {
     install() {
         import('../modules/entry/event/index')
+        import('../modules/common/event/index')
     }
 }
 

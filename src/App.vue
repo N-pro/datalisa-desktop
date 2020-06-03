@@ -1,26 +1,26 @@
 <template>
-  <page-cntr></page-cntr>
+  <div id="app-view">
+    <page-cntr></page-cntr>
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import PageCntr from './components/PageCntr.vue';
+import { Component, Vue } from "vue-property-decorator";
+import PageCntr from "./components/PageCntr.vue";
+import './style/index.scss'
 
 @Component({
   components: {
-    PageCntr,
-  },
+    PageCntr
+  }
 })
 export default class App extends Vue {}
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #435668;
-  margin-top: 60px;
+<style  lang="scss" scoped>
+#app-view {
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 </style>

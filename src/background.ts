@@ -1,12 +1,12 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, Menu } from 'electron'
 import {
   createProtocol,
   /* installVueDevtools */
 } from 'vue-cli-plugin-electron-builder/lib'
 
-import run from './plugin' 
+import run from './plugin'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -19,6 +19,7 @@ protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: tru
 
 function createWindow() {
   // Create the browser window.
+  Menu.setApplicationMenu(null)
   win = new BrowserWindow({
     width: 800, height: 600, webPreferences: {
       nodeIntegration: true
@@ -56,7 +57,7 @@ app.on('activate', () => {
   }
 })
 app.on('ready', async () => {
-  if (isDevelopment && !process.env.IS_TEST) {}
+  if (isDevelopment && !process.env.IS_TEST) { }
   createWindow()
   win && run(app)
 })
