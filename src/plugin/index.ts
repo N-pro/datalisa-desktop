@@ -3,7 +3,7 @@ import { plugin as update } from './updater'
 import { plugin as event } from './event'
 
 export interface Plugin {
-    install(app: App): void
+    install(app: App): void;
 }
 
 const plugins: Plugin[] = [update, event]

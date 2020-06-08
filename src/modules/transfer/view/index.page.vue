@@ -1,31 +1,32 @@
 
 
 <template>
-  <a-layout style="height:100%">
-    <a-layout-content
-      :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
-    >
-      <update-view />
+  <v-tabs
+    class="fill"
+    :style="{height:'100%'}"
+    next-icon="mdi-arrow-right-bold-box-outline"
+    prev-icon="mdi-arrow-left-bold-box-outline"
+  >
+    <v-tab :href="`#tab-0`" :style="{marginLeft:'56px'}">新建项目</v-tab>
 
-      <a-tabs default-active-key="1" style="height:100%;display: flex;flex-direction: column;" >
-        <a-tab-pane key="1" tab="当前任务" style="height:100%">
-          <plan />
-        </a-tab-pane>
-        <a-tab-pane key="2" tab="历史记录" force-render style="height:100%">
-          <histroy />
-        </a-tab-pane>
-      </a-tabs>
-    </a-layout-content>
-  </a-layout>
+    <v-tab :href="`#tab-1`">历史记录</v-tab>
+
+    <v-tab-item :value="'tab-0'">
+      <plan/>
+    </v-tab-item>
+
+    <v-tab-item :value="'tab-1'">
+      <v-card flat tile>
+        <v-card-text>3123131</v-card-text>
+      </v-card>
+    </v-tab-item>
+  </v-tabs>
 </template>
 <script>
-import UpdateView from "../../common/view/Update";
-import Plan from './Plan/index'
-import Histroy from './Histroy'
+import Plan from "./Plan";
+
 export default {
-  components: {
-    UpdateView,Plan,Histroy
-  },
+  components: { Plan },
   data() {
     return {
       collapsed: false
@@ -33,9 +34,10 @@ export default {
   }
 };
 </script>
-<style>
-.ant-tabs .ant-tabs-top-content{
-  flex: 1;
-  overflow: hidden;
-} 
+
+<style  scoped>
+.fill >>> .v-window__container,
+.fill >>> .v-window-item {
+  height: 100%;
+}
 </style>
