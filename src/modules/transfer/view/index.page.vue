@@ -23,7 +23,7 @@
   </v-tabs>
 </template>
 <script>
-import Plan from "./Plan";
+import Plan from "./Plan/Index";
 
 export default {
   components: { Plan },
