@@ -21,7 +21,7 @@
         
         <v-tab :href="`#tab-2`">
           数据迁移
-          <v-icon>mdi-phone</v-icon>
+          <v-icon>mdi-transfer</v-icon>
         </v-tab>
 
         <v-tab-item :value="'tab-0'">
