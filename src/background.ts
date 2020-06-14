@@ -21,7 +21,7 @@ function createWindow() {
   // Create the browser window.
   Menu.setApplicationMenu(null)
   win = new BrowserWindow({
-    width: 800, height: 600, webPreferences: {
+    width: 1300, height: 960, webPreferences: {
       nodeIntegration: true
     }
   })

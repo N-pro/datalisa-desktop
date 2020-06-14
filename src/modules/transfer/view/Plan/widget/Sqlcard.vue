@@ -6,20 +6,25 @@
         <v-list-item-title class="headline mb-1">
           <div class="content">
             {{type==="source"?'源数据库':'目标数据库'}}
-            <v-select :items="['Oracle 11g', 'MySQL', 'PostgreSQL', 'SQL Server']" label></v-select>
+            <v-select v-model="DBtype" :items="['Oracle 11g', 'MySQL', 'PostgreSQL', 'SQL Server']" label></v-select>
           </div>
           <v-avatar class="avatar" tile color="grey" :height="80" :size="160">
 
           </v-avatar>
         </v-list-item-title>
 
-        <v-text-field v-model="host" label="主机名(host)" required></v-text-field>
+        <div :style="{display:'flex'}">
 
-        <v-text-field v-model="port" label="端口(port)" required></v-text-field>
+        <v-text-field v-model="host" :style="{flex:'2',marginRight:'12px'}" label="主机名(host)" required></v-text-field>
+
+        <v-text-field v-model="port" :style="{flex:'1'}" label="端口(port)" required></v-text-field>
+        </div>
 
         <v-text-field v-model="username" label="用户名(user)" required></v-text-field>
 
         <v-text-field v-model="password" label="口令(password)" required></v-text-field>
+
+        <v-text-field v-model="password" v-show="DBtype.indexOf('Oracle') >= 0" label="服务名(service)" required></v-text-field>
       </v-list-item-content>
     </v-list-item>
 
@@ -34,6 +39,7 @@
 export default {
   props: ["type"],
   data: () => ({
+    DBtype:"",
     host: "",
     port: "",
     username: "",

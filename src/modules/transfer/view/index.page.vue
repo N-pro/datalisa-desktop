@@ -9,7 +9,7 @@
       prev-icon="mdi-arrow-left-bold-box-outline"
     >
       <v-tab :href="`#tab-0`" :style="{marginLeft:'56px'}">
-        <v-icon left small>mdi-calendar-text</v-icon>新建项目
+        <v-icon left small>mdi-calendar-text</v-icon>迁移项目
       </v-tab>
 
       <v-tab :href="`#tab-1`">
@@ -19,10 +19,10 @@
     <div class="divider"></div>
 
     <v-tabs-items v-model="tab" class="items">
-      <v-tab-item :value="'tab-0'">
+      <v-tab-item :value="'tab-0'"  class="item">
         <plan />
       </v-tab-item>
-      <v-tab-item :value="'tab-1'">
+      <v-tab-item :value="'tab-1'"  class="item">
         <v-card flat tile>
           <v-card-text>3123131</v-card-text>
         </v-card>
@@ -60,7 +60,9 @@ export default {
 .items{
   flex: 1;
 }
-
+.item{
+  height: 100%;
+}
 
 /* .fill >>> .v-window__container,
 .fill >>> .v-window-item {

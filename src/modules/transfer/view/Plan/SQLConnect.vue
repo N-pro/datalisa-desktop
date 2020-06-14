@@ -1,22 +1,27 @@
 <template>
   <div class="cntr">
     <div class="content">
-      <sql-card type="source"/>
-       <v-icon x-large>mdi-arrow-right-thick</v-icon>
-      <sql-card type="target"/>
+      <sql-card type="source" />
+      <v-icon x-large>mdi-arrow-right-thick</v-icon>
+      <sql-card type="target" />
     </div>
 
     <div class="btns">
-      <v-btn color="primary">下一步</v-btn>
+      <v-btn color="primary" @click="e=>next()">下一步</v-btn>
     </div>
   </div>
 </template>
 
 <script>
-import SqlCard from "./Sqlcard";
+import SqlCard from "./widget/Sqlcard";
 
 export default {
-  components: { SqlCard }
+  components: { SqlCard },
+  methods: {
+    next() {
+      this.$emit("connect");
+    }
+  }
 };
 </script>
 
@@ -25,6 +30,7 @@ export default {
   height: 100%;
   display: flex;
   overflow: hidden;
+  padding: 24px;
   flex-direction: column;
 }
 

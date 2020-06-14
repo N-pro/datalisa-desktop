@@ -1,0 +1,13 @@
+.flex-col {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    height: 100%;
+    >.flex-fill {
+        flex: auto;
+        overflow: auto;
+    }
+    >.flex-fix {
+        flex: none;
+    }
+}
