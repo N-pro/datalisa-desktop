@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { randInt, randWord } from "@/utils/index";
+import { randInt, randWord } from "@/utils/rand";
 import Infocard from "./widget/Infocard";
 export default {
   components: { Infocard },
